@@ -7,7 +7,6 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     // @ts-ignore
     const db = await client.db('ENSE');
     const col = db.collection("ReviewedDocument");
-    const filter = {"year of publication": req.body.yop};
 
     const document = await col.find().toArray();;
     console.log("Document found:\n" + JSON.stringify(document));

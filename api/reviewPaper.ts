@@ -10,21 +10,20 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
 
     // Create a new document
     let Document = {
-        "title": req.body.title,
         "authors": req.body.authors,
-        "year of publication": req.body.yop,
+        "doi": req.body.doi,
         "jName": req.body.jName,
-        "SEpractice":req.body.SEpractice,
-        "claim": req.body.claim,
-        "result of evidence": req.body.ROE,
-        "type of research":req.body.TOR,
-        "type of participant": req.body.TOP,
+        "number": req.body.number,
+        "pages": req.body.pages,
+        "title": req.body.title,
+        "volume": req.body.volume,
+        "yop": req.body.yop
     }
     // Insert the document into the specified collection
     const p = await col.insertOne(Document);
     // Find and return the document
     const filter = {"title": req.body.title};
-    const deletedDocument = await db.collection("AnalyzedDocument").deleteMany(filter);
+    const deletedDocument = await db.collection("newAddDocument").deleteMany(filter);
     console.log("Document analyzed:\n" + JSON.stringify(deletedDocument));
     res.status(200).json(deletedDocument);
 }

@@ -18,7 +18,6 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
         "title": req.body.title,
         "volume": req.body.volume,
         "yop": req.body.yop
-
     }
     // Insert the document into the specified collection
     const p = await col.insertOne(personDocument);
