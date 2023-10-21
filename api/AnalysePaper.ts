@@ -6,7 +6,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     // @ts-ignore
     const db = await client.db('ENSE');
-    const col = db.collection("AnalyzedDucument");
+    const col = db.collection("AnalyzedDocument");
 
     // Create a new document
     let Document = {
@@ -24,7 +24,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const p = await col.insertOne(Document);
     // Find and return the document
     const filter = {"title": req.body.title};
-    const document = await col.findOne(filter);
-    console.log("Document found:\n" + JSON.stringify(document));
-    res.status(200).json(document);
+    const deletedDocument = await db.collection("newAddDocument").deleteMany(filter);
+    console.log("Document analyzed:\n" + JSON.stringify(deletedDocument));
+    res.status(200).json(deletedDocument);
 }
