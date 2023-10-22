@@ -14,7 +14,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
         res.status(200).json(document);
     }
     else {
-        if(req.query.yop==null){
+        if(req.query.yop===null){
             const filter = { "SEpractice": req.query.SEpractice }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
@@ -23,8 +23,17 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
             res.setHeader("Expires", "0"); // Proxies.
             res.status(200).json(document);
         }
-        else {
+        else if (req.query.SEpractice===null) {
             const filter = { "yop": req.query.yop }
+            const document = await col.find(filter).toArray();
+            console.log("Document found:\n" + JSON.stringify(document));
+            res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            res.setHeader("Expires", "0"); // Proxies.
+            res.status(200).json(document);
+        }
+        else {
+            const filter = { "yop": req.query.yop,"SEpractice":req.query.SEpractice }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
