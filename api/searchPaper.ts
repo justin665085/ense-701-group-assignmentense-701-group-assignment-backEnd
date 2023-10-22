@@ -8,14 +8,14 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const db = await client.db('ENSE');
     const col = db.collection("AnalyzedDocument");
 
-    if(req.query.yop===null&&req.query.SEpractice==null){
+    if(req.query.year===null&&req.query.practice==null){
         const document = await col.find().toArray();
         console.log("Document found:\n" + JSON.stringify(document));
         res.status(200).json(document);
     }
     else {
-        if(req.query.yop===null){
-            const filter = { "SEpractice": req.query.SEpractice }
+        if(req.query.year===null){
+            const filter = { "SEpractice": req.query.practice }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -23,8 +23,8 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
             res.setHeader("Expires", "0"); // Proxies.
             res.status(200).json(document);
         }
-        else if (req.query.SEpractice===null) {
-            const filter = { "yop": req.query.yop }
+        else if (req.query.practice===null) {
+            const filter = { "yop": req.query.year }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -33,7 +33,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
             res.status(200).json(document);
         }
         else {
-            const filter = { "yop": req.query.yop,"SEpractice":req.query.SEpractice }
+            const filter = { "yop": req.query.year,"SEpractice":req.query.practice }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
