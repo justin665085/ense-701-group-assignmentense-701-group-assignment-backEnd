@@ -11,7 +11,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const filter = {"year of publication": req.query.yop,
                     "SEpractice": req.query.SEpractice};
 
-    const document = await col.find().toArray();;
+    const document = await col.find(filter).toArray();;
     console.log("Document found:\n" + JSON.stringify(document));
     res.status(200).json(document);
 }
