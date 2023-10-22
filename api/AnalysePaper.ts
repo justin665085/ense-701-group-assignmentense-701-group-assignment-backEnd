@@ -26,5 +26,8 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const filter = {"title": req.body.title};
     const deletedDocument = await db.collection("ReviewedDocument").deleteMany(filter);
     console.log("Document analyzed:\n" + JSON.stringify(deletedDocument));
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    res.setHeader("Expires", "0"); // Proxies.
     res.status(200).json(deletedDocument);
 }
