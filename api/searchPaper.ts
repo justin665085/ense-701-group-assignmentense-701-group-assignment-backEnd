@@ -6,12 +6,12 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     // @ts-ignore
     const db = await client.db('ENSE');
-    const col = db.collection("ReviewedDocument");
+    const col = db.collection("AnalyzedDocument");
 
     const filter = {"year of publication": req.query.yop,
                     "SEpractice": req.query.SEpractice};
 
-    const document = await col.find(filter).toArray();;
+    const document = await col.find(filter).toArray();
     console.log("Document found:\n" + JSON.stringify(document));
     res.status(200).json(document);
 }
