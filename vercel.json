@@ -9,15 +9,7 @@
       "dest": "/welcome.html"
     },
     {
-      "src": "/",
-      "headers": {
-        "cache-control": "no-cache, no-store, must-revalidate",
-        "Access-Control-Allow-Origin": "*"
-      },
-      "dest": "/api"
-    },
-    {
-      "src": "/",
+      "src": "/(.*)",
       "headers": {
         "cache-control": "no-cache, no-store, must-revalidate",
         "Access-Control-Allow-Origin": "*"
