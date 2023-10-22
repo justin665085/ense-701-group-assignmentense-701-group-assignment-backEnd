@@ -23,7 +23,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
         res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setHeader("Expires", "0"); // Proxies.
-        res.setHeader("Access-Control-Allow-Origin", "*");
+        // res.setHeader("Access-Control-Allow-Origin", "*");
 
         res.status(200).json(document);
     }
