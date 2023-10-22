@@ -8,7 +8,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const db = await client.db('ENSE');
     const col = db.collection("AnalyzedDocument");
 
-    const filter = {"year of publication": req.query.yop,
+    const filter = {"yop": req.query.yop,
                     "SEpractice": req.query.SEpractice};
 
     const document = await col.find(filter).toArray();
