@@ -12,13 +12,13 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     let Document = {
         "title": req.body.title,
         "authors": req.body.authors,
-        "year of publication": req.body.yop,
+        "yop": req.body.yop,
         "jName": req.body.jName,
         "SEpractice":req.body.SEpractice,
         "claim": req.body.claim,
-        "result of evidence": req.body.ROE,
-        "type of research":req.body.TOR,
-        "type of participant": req.body.TOP,
+        "ROE": req.body.ROE,
+        "TOR":req.body.TOR,
+        "TOP": req.body.TOP,
     }
     // Insert the document into the specified collection
     const p = await col.insertOne(Document);
