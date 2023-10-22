@@ -7,15 +7,18 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     // @ts-ignore
     const db = await client.db('ENSE');
     const col = db.collection("AnalyzedDocument");
-
-    if(req.query.year===null&&req.query.practice==null){
+    console.log("year")
+    console.log(req.query.year)
+    console.log("practice")
+    console.log(req.query.practice)
+    if(req.query.year.length===0&&req.query.practice.length===0){
         const document = await col.find().toArray();
         console.log("Document found:\n" + JSON.stringify(document));
         res.status(200).json(document);
     }
     else {
-        if(req.query.year===null){
-            const filter = { "SEpractice": req.query.practice }
+        if(req.query.year.length===0){
+            const filter = { "SEpractice": req.query.practice.toString().trim() }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -23,8 +26,8 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
             res.setHeader("Expires", "0"); // Proxies.
             res.status(200).json(document);
         }
-        else if (req.query.practice===null) {
-            const filter = { "yop": req.query.year }
+        else if (req.query.practice.length===0) {
+            const filter = { "yop": +req.query.year }
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -33,7 +36,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
             res.status(200).json(document);
         }
         else {
-            const filter = { "yop": req.query.year,"SEpractice":req.query.practice }
+            const filter = { "yop": +req.query.year,"SEpractice":req.query.practice.toString().trim()}
             const document = await col.find(filter).toArray();
             console.log("Document found:\n" + JSON.stringify(document));
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.

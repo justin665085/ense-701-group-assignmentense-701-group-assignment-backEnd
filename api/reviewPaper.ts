@@ -10,6 +10,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const option = req.body.opinion
 
     if (option === 0) {
+        console.log(req.body.title)
         const filter = {"title": req.body.title};
         const deletedDocument = await db.collection("newAddDocument").deleteMany(filter);
         console.log("Document deleted:\n" + JSON.stringify(deletedDocument));
