@@ -8,12 +8,19 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     const db = await client.db('ENSE');
     const col = db.collection("AnalyzedDocument");
 
-    const filter = {"$or": [
-            { "yop": req.query.yop },
-            { "SEpractice": req.query.SEpractice }]
-    };
+    if(req.query.yop===null&&req.query.SEpractice){
+        const document = await col.find().toArray();
+        console.log("Document found:\n" + JSON.stringify(document));
+        res.status(200).json(document);
+    }
+    else {
+        const filter = {"$or": [
+                { "yop": req.query.yop },
+                { "SEpractice": req.query.SEpractice }]
+        };
+        const document = await col.find(filter).toArray();
+        console.log("Document found:\n" + JSON.stringify(document));
+        res.status(200).json(document);
+    }
 
-    const document = await col.find(filter).toArray();
-    console.log("Document found:\n" + JSON.stringify(document));
-    res.status(200).json(document);
 }
