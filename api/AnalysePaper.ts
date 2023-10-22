@@ -2,6 +2,10 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { MongoClient } from 'mongodb'
 const uri = "mongodb+srv://dbUser:dbUser@cluster0.kwhhqy3.mongodb.net/?retryWrites=true&w=majority";
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
+    console.log(req.method)
+    if (req.method === "OPTIONS") {
+        res.status(200)
+    }
     // @ts-ignore
     const client = await MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     // @ts-ignore
